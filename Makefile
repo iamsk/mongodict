@@ -1,5 +1,5 @@
 test:
-	@clear
+	-@clear
 	@python -c 'from __future__ import print_function; import sys; print(sys.version)'
 	nosetests -dvs --with-coverage --cover-package mongodict --with-yanc tests/test_*.py
 

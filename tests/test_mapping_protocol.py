@@ -26,7 +26,7 @@ def random_string(length=32):
 
 class TestMappingProtocol(mapping_tests.BasicTestMappingProtocol):
     def setUp(self):
-        self._connection = pymongo.Connection(host=MONGO_HOST, port=MONGO_PORT)
+        self._connection = pymongo.MongoClient(host=MONGO_HOST, port=MONGO_PORT)
         self._db = self._connection[MONGO_DATABASE]
         self.collections = []
 

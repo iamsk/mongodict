@@ -47,14 +47,13 @@ class MongoDict(MutableMapping):
 
     def __init__(self, host='localhost', port=27017, database='mongodict',
                  collection='main', codec=(pickle_dumps, pickle.loads),
-                 safe=True, auth=None, default=None, index_type='key'):
+                 auth=None, default=None, index_type='key'):
         ''' MongoDB-backed Python ``dict``-like interface
 
         Create a new MongoDB connection.
         `auth` must be (login, password)'''
         super(MongoDict, self).__init__()
-        self._connection = pymongo.Connection(host=host, port=port, safe=safe)
-        self._safe = safe
+        self._connection = pymongo.MongoClient(host=host, port=port)
         self._db = self._connection[database]
         if auth is not None:  # TODO: test auth
             if not self._db.authenticate(*auth):
@@ -107,7 +106,7 @@ class MongoDict(MutableMapping):
 
     def clear(self):
         ''' Delete all key/value pairs '''
-        self._collection.remove({}, safe=self._safe)
+        self._collection.remove({})
 
     def __len__(self):
         ''' Return how many key/value pairs are stored '''
@@ -128,4 +127,4 @@ class MongoDict(MutableMapping):
     def __del__(self):
         ''' Sync all operations and disconnect '''
         self._connection.fsync()
-        self._connection.disconnect()
+        self._connection.close()
