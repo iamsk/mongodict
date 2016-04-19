@@ -90,14 +90,13 @@ class TestMongoDict(unittest.TestCase):
     # Removed
     # test_deletion_of_MongoDict_object_should_sync_data_even_without_safe
 
+    @unittest.skip("Clarification Requested. See #16")
     def test_keys_method_should_not_raises_exception_if_more_than_16MB(self):
         '''Should not raise exception if sum of keys is greater 16MB
 
         Bug reported by @andrebco:
             <https://github.com/turicas/mongodict/issues/10>
         '''
-        # This test fails -- need further information.
-        return
         my_dict = MongoDict(**self.config)
         key_template = ('python-rules' * 100000) + '{}'
         key_byte_count = 0
